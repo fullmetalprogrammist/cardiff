@@ -22,7 +22,7 @@
     }
 
     function updatePath(card, item) {
-        const pathEl = card.querySelector('.card__path');
+        const pathEl = card.querySelector('.card-path');
         const store = window.CARD_STORE;
         const rec = store && store.data && store.data[item.id];
 
@@ -33,10 +33,10 @@
         }
         pathText.nodeValue = `/${data.keystore || ''}/${String(item.id).padStart(2, '0')}`;
 
-        let meta = pathEl.querySelector('.card__meta');
+        let meta = pathEl.querySelector('.card-meta');
         if (!meta) {
             meta = document.createElement('span');
-            meta.className = 'card__meta';
+            meta.className = 'card-meta';
             pathEl.appendChild(meta);
         }
 
@@ -44,12 +44,12 @@
 
         if (rec) {
             const age = document.createElement('span');
-            age.className = 'card__age';
+            age.className = 'card-age';
             age.textContent = formatAge(Date.now() - rec.reviewedAt);
             meta.appendChild(age);
 
             const dot = document.createElement('span');
-            dot.className = 'card__grade-dot';
+            dot.className = 'card-grade-dot';
             dot.dataset.grade = rec.grade;
             meta.appendChild(dot);
         }
@@ -61,16 +61,16 @@
 
         updatePath(card, item);
 
-        fillList(card.querySelector('.card__face--question .card__list'), item.question);
-        fillList(card.querySelector('.card__face--answer   .card__list'), item.answer);
+        fillList(card.querySelector('.card-question .card-list'), item.question);
+        fillList(card.querySelector('.card-answer .card-list'), item.answer);
 
         return card;
     }
 
     function initFlip(card) {
-        const faceQuestion = card.querySelector('.card__face--question');
-        const faceAnswer   = card.querySelector('.card__face--answer');
-        const flipBtn      = card.querySelector('.card__flip');
+        const faceQuestion = card.querySelector('.card-question');
+        const faceAnswer   = card.querySelector('.card-answer');
+        const flipBtn      = card.querySelector('.flip');
         let isAnswerShown = false;
 
         function setSide(show) {
@@ -113,16 +113,16 @@
         }
     }
 
-    let orderMode = 'id';
+    let orderMode = 'all';
 
     function getVisibleCards() {
-        const allSlot = document.querySelector('.all-cards');
-        return [...allSlot.querySelectorAll('.card:not([hidden])')];
+        const slot = document.querySelector('.cards');
+        return [...slot.querySelectorAll('.card:not([hidden])')];
     }
 
     function getCurrentIndex(cards) {
-        const allSlot = document.querySelector('.all-cards');
-        const scrollMid = allSlot.scrollTop + allSlot.clientHeight / 2;
+        const slot = document.querySelector('.cards');
+        const scrollMid = slot.scrollTop + slot.clientHeight / 2;
         let bestIdx = 0;
         let bestDist = Infinity;
         for (let i = 0; i < cards.length; i++) {
@@ -141,17 +141,17 @@
         const total = cards.length;
         const current = total ? getCurrentIndex(cards) + 1 : 0;
 
-        const curEl = document.querySelector('.card-nav__current');
-        const totEl = document.querySelector('.card-nav__total');
+        const curEl = document.querySelector('.bottom-bar-current');
+        const totEl = document.querySelector('.bottom-bar-total');
         if (curEl) curEl.textContent = String(current);
         if (totEl) totEl.textContent = String(total);
     }
 
     function initCardNav() {
-        const allSlot = document.querySelector('.all-cards');
-        if (!allSlot) return;
+        const slot = document.querySelector('.cards');
+        if (!slot) return;
 
-        allSlot.addEventListener('scroll', updateNav, { passive: true });
+        slot.addEventListener('scroll', updateNav, { passive: true });
 
         document.querySelectorAll('[data-nav]').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -169,27 +169,27 @@
     }
 
     function resortAllCards() {
-        const allSlot = document.querySelector('.all-cards');
-        if (!allSlot || typeof window.CARD_RECOMPUTE !== 'function') return;
+        const slot = document.querySelector('.cards');
+        if (!slot || typeof window.CARD_RECOMPUTE !== 'function') return;
 
         const order = window.CARD_RECOMPUTE(orderMode);
         const visible = new Set(order.map(String));
 
-        for (const card of allSlot.querySelectorAll('.card')) {
+        for (const card of slot.querySelectorAll('.card')) {
             card.hidden = !visible.has(String(card.dataset.id));
         }
         for (const id of order) {
-            const card = allSlot.querySelector(`.card[data-id="${id}"]`);
-            if (card) allSlot.appendChild(card);
+            const card = slot.querySelector(`.card[data-id="${id}"]`);
+            if (card) slot.appendChild(card);
         }
 
         const byId = new Map(data.questions.map(q => [q.id, q]));
-        for (const card of allSlot.querySelectorAll('.card:not([hidden])')) {
+        for (const card of slot.querySelectorAll('.card:not([hidden])')) {
             const item = byId.get(Number(card.dataset.id)) || byId.get(card.dataset.id);
             if (item) updatePath(card, item);
         }
 
-        allSlot.scrollTo({ top: 0, behavior: 'instant' });
+        slot.scrollTo({ top: 0, behavior: 'instant' });
         updateNav();
     }
 
@@ -222,20 +222,20 @@
     }
 
     const template = document.getElementById('card-template');
-    const allSlot  = document.querySelector('.all-cards');
+    const slot     = document.querySelector('.cards');
 
-    if (!template || !allSlot) {
-        console.warn('[cards] Не найдены #card-template / .all-cards');
+    if (!template || !slot) {
+        console.warn('[cards] Не найдены #card-template / .cards');
         return;
     }
 
     document.title = data.title ? data.title + ' — cardiff' : document.title;
 
-    addHiddenHeading(allSlot, 'Все карточки');
+    addHiddenHeading(slot, 'Все карточки');
 
     for (const item of data.questions) {
         const card = createCard(template, item);
-        allSlot.appendChild(card);
+        slot.appendChild(card);
         initFlip(card);
         initGrades(card);
     }

@@ -38,23 +38,22 @@
             .map(x => x.id);
     }
 
-    function idSort(questions, store, filterFn) {
-        return questions
-            .filter(q => filterFn(store[q.id]))
-            .map(q => q.id)
-            .sort((a, b) => a - b);
-    }
-
     function computeOrder(mode, store) {
         const qs = data.questions;
 
         switch (mode) {
             case 'grey':
-                return idSort(qs, store, rec => !rec);
+                return qs
+                    .filter(q => !store[q.id])
+                    .map(q => q.id)
+                    .sort((a, b) => b - a);
+
             case 'red':
                 return ageSort(qs, store, rec => rec && rec.grade === 'hard');
-            case 'id':
+
+            case 'all':
                 return qs.map(q => q.id).sort((a, b) => b - a);
+
             case 'random': {
                 const ids = qs.map(q => q.id);
                 for (let i = ids.length - 1; i > 0; i--) {
@@ -63,7 +62,8 @@
                 }
                 return ids;
             }
-            case 'all':
+
+            case 'ebbinghaus':
             default:
                 return ageSort(qs, store, rec => !!rec);
         }
@@ -72,7 +72,7 @@
     const store = read();
 
     window.CARD_STORE = { read: read, write: write, data: store, key: KEY };
-    window.CARD_ORDER = computeOrder('all', store);
+    window.CARD_ORDER = computeOrder('ebbinghaus', store);
 
     window.CARD_RECOMPUTE = function (mode) {
         const fresh = read();

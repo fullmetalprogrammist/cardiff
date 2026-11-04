@@ -58,7 +58,7 @@ main {
 /* ===================================================================== */
 /*                       Слайды-карточки                                 */
 /* ===================================================================== */
-.all-cards {
+.cards {
     height: 100vh;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
@@ -91,7 +91,7 @@ main {
     overflow: hidden;
 }
 
-.card__path {
+.card-path {
     flex: 0 0 auto;
     display: flex;
     justify-content: space-between;
@@ -111,7 +111,7 @@ main {
     text-overflow: ellipsis;
 }
 
-.card__meta {
+.card-meta {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -119,11 +119,11 @@ main {
     letter-spacing: 0.04em;
 }
 
-.card__age {
+.card-age {
     font-weight: 700;
 }
 
-.card__grade-dot {
+.card-grade-dot {
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -132,14 +132,14 @@ main {
     box-shadow: inset 0 0 0 1px #2b2620;
 }
 
-.card__grade-dot[data-grade="easy"]   { background: #4f8a3d; }
-.card__grade-dot[data-grade="medium"] { background: #f0c674; }
-.card__grade-dot[data-grade="hard"]   { background: #d94a3a; }
+.card-grade-dot[data-grade="easy"]   { background: #4f8a3d; }
+.card-grade-dot[data-grade="medium"] { background: #f0c674; }
+.card-grade-dot[data-grade="hard"]   { background: #d94a3a; }
 
 /* ===================================================================== */
-/*                             Область контента                          */
+/*                             Тело карточки                             */
 /* ===================================================================== */
-.card__content {
+.card-body {
     flex: 1 1 auto;
     min-height: 0;
     padding: 30px 24px 18px;
@@ -150,26 +150,27 @@ main {
     scrollbar-color: #2b2620 transparent;
 }
 
-.card__content::-webkit-scrollbar {
+.card-body::-webkit-scrollbar {
     width: 10px;
 }
 
-.card__content::-webkit-scrollbar-track {
+.card-body::-webkit-scrollbar-track {
     background: transparent;
     border-left: 1px solid #c9bfa6;
 }
 
-.card__content::-webkit-scrollbar-thumb {
+.card-body::-webkit-scrollbar-thumb {
     background: #c9bfa6;
     border: 1px solid #2b2620;
     border-radius: 0;
 }
 
-.card__content::-webkit-scrollbar-thumb:hover {
+.card-body::-webkit-scrollbar-thumb:hover {
     background: #b5651d;
 }
 
-.card__face {
+.card-question,
+.card-answer {
     margin: 0;
     color: #2b2620;
     font-family: "Courier New", monospace;
@@ -179,7 +180,7 @@ main {
     text-transform: uppercase;
 }
 
-.card__list {
+.card-list {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -190,12 +191,12 @@ main {
     text-transform: none;
 }
 
-.card__list li {
+.card-list li {
     position: relative;
     padding: 0.3em 0 0.3em 2.2em;
 }
 
-.card__list li::before {
+.card-list li::before {
     content: "\00B7";
     position: absolute;
     left: 0.7em;
@@ -203,15 +204,15 @@ main {
     font-weight: 700;
 }
 
-.card__list li + li {
+.card-list li + li {
     margin-top: 0;
     border-top: 1px dotted #c9bfa6;
 }
 
 /* ===================================================================== */
-/*                              Меню карточки                            */
+/*                              Подвал карточки                          */
 /* ===================================================================== */
-.card__footer {
+.card-footer {
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
@@ -226,7 +227,7 @@ main {
 /* ===================================================================== */
 /*                                Оценки                                 */
 /* ===================================================================== */
-.card__grades {
+.grades {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -265,46 +266,34 @@ main {
     box-shadow: 1px 1px 0 #2b2620;
 }
 
-.grade--hard {
+.grade-hard {
     background: #d94a3a;
     color: #f4efe2;
-    border-color: #2b2620;
-    box-shadow: 2px 2px 0 #2b2620;
 }
-
-.grade--hard:hover {
+.grade-hard:hover {
     background: #e35b4b;
-    box-shadow: 3px 3px 0 #2b2620;
 }
 
-.grade--medium {
+.grade-medium {
     background: #f0c674;
     color: #2b2620;
-    border-color: #2b2620;
-    box-shadow: 2px 2px 0 #2b2620;
 }
-
-.grade--medium:hover {
+.grade-medium:hover {
     background: #f5d38a;
-    box-shadow: 3px 3px 0 #2b2620;
 }
 
-.grade--easy {
+.grade-easy {
     background: #4f8a3d;
     color: #f4efe2;
-    border-color: #2b2620;
-    box-shadow: 2px 2px 0 #2b2620;
 }
-
-.grade--easy:hover {
+.grade-easy:hover {
     background: #5c9c48;
-    box-shadow: 3px 3px 0 #2b2620;
 }
 
 /* ===================================================================== */
 /*                            Кнопка поворота                            */
 /* ===================================================================== */
-.card__flip {
+.flip {
     flex-shrink: 0;
     width: 44px;
     height: 34px;
@@ -320,23 +309,23 @@ main {
     transition: background 0.1s, box-shadow 0.1s, transform 0.1s;
 }
 
-.card__flip:hover {
+.flip:hover {
     background: #e9e2d0;
     box-shadow: 3px 3px 0 #2b2620;
 }
 
-.card__flip:active {
+.flip:active {
     transform: translate(1px, 1px);
     box-shadow: 1px 1px 0 #2b2620;
 }
 
-.card__flip[aria-pressed="true"] .card__flip-icon {
+.flip[aria-pressed="true"] .flip-icon {
     display: inline-block;
     transform: rotate(180deg);
 }
 
 /* ===================================================================== */
-/*                       Нижняя панель: режимы + навигация               */
+/*                            Нижняя панель                              */
 /* ===================================================================== */
 .bottom-bar {
     position: fixed;
@@ -344,25 +333,22 @@ main {
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
-
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    gap: 0;
-
     background: #e9e2d0;
     border: 1px solid #2b2620;
     border-bottom: none;
     box-shadow: 2px -2px 0 #2b2620;
 }
 
-.order-switch {
+.bottom-bar-group {
     display: flex;
     flex-direction: row;
-    gap: 0;
+    align-items: stretch;
 }
 
-.order-switch__btn {
+.bottom-bar-item {
     display: grid;
     place-items: center;
     min-width: 44px;
@@ -378,123 +364,86 @@ main {
     color: #2b2620;
     background: #e9e2d0;
     border: none;
-    border-right: 1px solid #2b2620;
     border-radius: 0;
     cursor: pointer;
+    text-decoration: none;
     transition: background 0.1s, color 0.1s;
 }
 
-.order-switch__btn:last-child {
-    border-right: none;
-}
-
-.order-switch__btn:hover {
+.bottom-bar-item:hover {
     background: #d9cfb6;
 }
 
-.order-switch__btn:active {
+.bottom-bar-item:active {
     background: #2b2620;
     color: #e9e2d0;
 }
 
-.order-switch__btn[aria-pressed="true"] {
+.bottom-bar-item[aria-pressed="true"] {
     background: #2b2620;
     color: #e9e2d0;
 }
 
-.order-switch__btn[aria-pressed="true"]:hover {
+.bottom-bar-item[aria-pressed="true"]:hover {
     background: #1a1712;
 }
 
-.order-switch__icon {
+.bottom-bar-icon {
     font-size: 18px;
     line-height: 1;
     display: block;
 }
 
-.order-switch__btn--grey {
+.bottom-bar-item-grey {
     background: #8a8a8a;
     color: #f4efe2;
 }
 
-.order-switch__btn--grey:hover {
+.bottom-bar-item-grey:hover {
     background: #9a9a9a;
 }
 
-.order-switch__btn--red {
+.bottom-bar-item-red {
     background: #d94a3a;
     color: #f4efe2;
 }
 
-.order-switch__btn--red:hover {
+.bottom-bar-item-red:hover {
     background: #e35b4b;
 }
 
-.order-switch__btn--grey[aria-pressed="true"],
-.order-switch__btn--red[aria-pressed="true"] {
+.bottom-bar-item-grey[aria-pressed="true"],
+.bottom-bar-item-red[aria-pressed="true"] {
     background: #2b2620;
     color: #e9e2d0;
 }
 
-.order-switch__swatch {
-    display: none;
-}
-
-.bottom-bar__sep {
+/* толстый разделитель между меню */
+.bottom-bar-sep {
     display: block;
     align-self: stretch;
     width: 4px;
     background: #2b2620;
-    margin: 0 6px;
 }
 
-.card-nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0;
-}
-
-.card-nav__btn {
-    display: grid;
-    place-items: center;
-    min-width: 36px;
-    height: 36px;
-    padding: 0 8px;
-
-    font-family: "Courier New", monospace;
-    font-size: 0.9rem;
-    font-weight: 700;
-    line-height: 1;
-
-    color: #2b2620;
-    background: #e9e2d0;
-    border: none;
-    border-right: 1px solid #2b2620;
-    border-radius: 0;
-    cursor: pointer;
-    transition: background 0.1s, color 0.1s;
-}
-
-.card-nav__btn:last-child {
-    border-right: none;
-    border-left: 1px solid #2b2620;
-}
-
-.card-nav__btn:hover {
-    background: #d9cfb6;
-}
-
-.card-nav__btn:active {
+/* тонкий разделитель внутри меню */
+.bottom-bar-sep-thin {
+    display: block;
+    align-self: stretch;
+    width: 1px;
     background: #2b2620;
-    color: #e9e2d0;
 }
 
-.card-nav__counter {
+.bottom-bar-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0 10px;
+
     font-family: "Courier New", monospace;
     font-size: 0.75rem;
     font-weight: 700;
+    line-height: 1;
     letter-spacing: 0.1em;
     color: #2b2620;
     white-space: nowrap;
@@ -502,15 +451,14 @@ main {
 
 @media (prefers-reduced-motion: reduce) {
     .grade,
-    .card__flip,
-    .order-switch__btn,
-    .card-nav__btn {
+    .flip,
+    .bottom-bar-item {
         transition: none;
     }
     .grade:hover,
     .grade:active,
-    .card__flip:hover,
-    .card__flip:active {
+    .flip:hover,
+    .flip:active {
         transform: none;
     }
 }

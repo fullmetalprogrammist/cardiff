@@ -17,7 +17,6 @@
         return;
     }
 
-    // последовательная загрузка скриптов
     function loadScript(path) {
         return new Promise((resolve, reject) => {
             const s = document.createElement('script');
