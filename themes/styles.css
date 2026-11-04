@@ -344,10 +344,12 @@ main {
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    background: #e9e2d0;
-    border: 1px solid #2b2620;
+    background: #f4efe2;
+    border: 2px solid #2b2620;
     border-bottom: none;
-    box-shadow: 2px -2px 0 #2b2620;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
 }
 
 .bottom-bar-group {
@@ -357,43 +359,49 @@ main {
 }
 
 .bottom-bar-item {
+    position: relative;
     display: grid;
     place-items: center;
-    min-width: 44px;
-    height: 36px;
-    padding: 0 12px;
+    min-width: 46px;
+    height: 38px;
+    padding: 0 14px;
 
     font-family: "Courier New", monospace;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
 
-    color: #2b2620;
-    background: #e9e2d0;
+    color: #6a5a42;
+    background: transparent;
     border: none;
     border-radius: 0;
     cursor: pointer;
     text-decoration: none;
-    transition: background 0.1s, color 0.1s;
+    transition: background 0.12s, color 0.12s;
 }
 
 .bottom-bar-item:hover {
-    background: #d9cfb6;
+    background: #e9e2d0;
+    color: #2b2620;
 }
 
 .bottom-bar-item:active {
-    background: #2b2620;
-    color: #e9e2d0;
+    background: #e0d6bc;
 }
 
-.bottom-bar-item[aria-pressed="true"] {
-    background: #2b2620;
-    color: #e9e2d0;
-}
-
-.bottom-bar-item[aria-pressed="true"]:hover {
-    background: #1a1712;
+.bottom-bar-item[aria-pressed="true"]::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 10px solid #20201f;
+    pointer-events: none;
 }
 
 .bottom-bar-icon {
@@ -403,12 +411,12 @@ main {
 }
 
 .bottom-bar-item-grey {
-    background: #8a8a8a;
-    color: #f4efe2;
+    background: #c9c2b2;
+    color: #3a3228;
 }
 
 .bottom-bar-item-grey:hover {
-    background: #9a9a9a;
+    background: #d6d0c2;
 }
 
 .bottom-bar-item-red {
@@ -420,17 +428,11 @@ main {
     background: #e35b4b;
 }
 
-.bottom-bar-item-grey[aria-pressed="true"],
-.bottom-bar-item-red[aria-pressed="true"] {
-    background: #2b2620;
-    color: #e9e2d0;
-}
-
 /* толстый разделитель между меню */
 .bottom-bar-sep {
     display: block;
     align-self: stretch;
-    width: 4px;
+    width: 2px;
     background: #2b2620;
 }
 
@@ -439,22 +441,24 @@ main {
     display: block;
     align-self: stretch;
     width: 1px;
-    background: #2b2620;
+    background: #c9bfa6;
 }
 
 .bottom-bar-counter {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 10px;
+    padding: 0 14px;
 
     font-family: "Courier New", monospace;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.1em;
-    color: #2b2620;
+    color: #6a5a42;
     white-space: nowrap;
+    background: #e9e2d0;
+    border-left: 1px solid #c9bfa6;
 }
 
 /* ===================================================================== */
