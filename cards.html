@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardiff</title>
+    <link rel="stylesheet" href="/cardiff/themes/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script src="/cardiff/scripts/loader.js" defer></script>
+</head>
+<body>
+    <main>
+        <section class="all-cards"></section>
+    </main>
+
+    <div class="bottom-bar">
+        <nav class="order-switch" role="group" aria-label="Порядок карточек">
+            <button type="button" class="order-switch__btn" data-mode="all" aria-pressed="false" aria-label="По Эббингаузу">
+                <span class="material-symbols-outlined order-switch__icon" aria-hidden="true">schedule</span>
+            </button>
+            <button type="button" class="order-switch__btn order-switch__btn--grey" data-mode="grey" aria-pressed="false" aria-label="Только серые">
+                <span class="order-switch__swatch" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="order-switch__btn order-switch__btn--red" data-mode="red" aria-pressed="false" aria-label="Только красные">
+                <span class="order-switch__swatch" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="order-switch__btn" data-mode="random" aria-pressed="false">RND</button>
+            <button type="button" class="order-switch__btn" data-mode="id" aria-pressed="true">ALL</button>
+        </nav>
+
+        <span class="bottom-bar__sep" aria-hidden="true"></span>
+
+        <nav class="card-nav" role="group" aria-label="Навигация по карточкам">
+            <button type="button" class="card-nav__btn" data-nav="prev" aria-label="Предыдущая карточка">&lt;</button>
+            <span class="card-nav__counter"><span class="card-nav__current">1</span>/<span class="card-nav__total">1</span></span>
+            <button type="button" class="card-nav__btn" data-nav="next" aria-label="Следующая карточка">&gt;</button>
+        </nav>
+    </div>
+
+    <template id="card-template">
+        <article class="card" data-side="question">
+            <div class="card__path"></div>
+            <div class="card__content">
+                <section class="card__face card__face--question" aria-label="Вопрос">
+                    <ul class="card__list"></ul>
+                </section>
+                <section class="card__face card__face--answer" aria-label="Ответ" hidden>
+                    <ul class="card__list"></ul>
+                </section>
+            </div>
+            <footer class="card__footer">
+                <div class="card__grades" role="group" aria-label="Оценка сложности">
+                    <button type="button" class="grade grade--easy"   data-grade="easy"></button>
+                    <button type="button" class="grade grade--medium" data-grade="medium"></button>
+                    <button type="button" class="grade grade--hard"   data-grade="hard"></button>
+                </div>
+                <button type="button" class="card__flip" aria-label="Показать ответ" aria-pressed="false">
+                    <span class="card__flip-icon" aria-hidden="true">⇄</span>
+                </button>
+            </footer>
+        </article>
+    </template>
+</body>
+</html>

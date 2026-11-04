@@ -113,7 +113,7 @@
         }
     }
 
-    let orderMode = 'all';
+    let orderMode = 'id';
 
     function getVisibleCards() {
         const allSlot = document.querySelector('.all-cards');
