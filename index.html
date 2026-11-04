@@ -3,14 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardiff — темы</title>
+    <title>Cardiff</title>
+    <link rel="stylesheet" href="/cardiff/themes/main.css">
 </head>
 <body>
     <main>
         <h1>Cardiff</h1>
+
         <ul>
-            <li><a href="/cardiff/cards.html?topic=kafka">Kafka</a></li>
-            <li><a href="/cardiff/cards.html?topic=http">HTTP</a></li>
+            <li>
+                <a href="/cardiff/cards.html?topic=tools">tools</a>
+                <ul>
+                    <li>
+                        <a href="/cardiff/cards.html?topic=kafka">kafka</a>
+                        <ul>
+                            <li><a href="/cardiff/cards.html?topic=kafka-basics">Основы</a></li>
+                            <li><a href="/cardiff/cards.html?topic=kafka-producers">Продюсеры и консьюмеры</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/cardiff/cards.html?topic=docker">docker</a>
+                        <ul>
+                            <li><a href="/cardiff/cards.html?topic=docker-images">Образы и контейнеры</a></li>
+                            <li><a href="/cardiff/cards.html?topic=docker-compose">Compose</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
     </main>
 </body>

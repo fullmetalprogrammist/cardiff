@@ -144,8 +144,8 @@
 
         const curEl = document.querySelector('.bottom-bar-current');
         const totEl = document.querySelector('.bottom-bar-total');
-        if (curEl) curEl.textContent = String(current);
-        if (totEl) totEl.textContent = String(total);
+        if (curEl) curEl.textContent = String(current).padStart(2, '0');
+        if (totEl) totEl.textContent = String(total).padStart(2, '0');
     }
 
     function initCardNav() {

@@ -1,0 +1,176 @@
+/* ===================================================================== */
+/*                                  База                                 */
+/* ===================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+    color: #2e2a1f;
+    background: #f5efd8;
+    line-height: 1.55;
+    letter-spacing: -0.01em;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        repeating-linear-gradient(0deg,
+            rgba(60, 55, 30, 0.035) 0 1px,
+            transparent 1px 26px);
+}
+
+main {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 64px 24px 96px;
+}
+
+/* ===================================================================== */
+/*                              Заголовок                                */
+/* ===================================================================== */
+main > h1 {
+    margin: 0 0 32px;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fbf6e4;
+    background: #2e2a1f;
+    padding: 16px 20px;
+    box-shadow: 6px 6px 0 #e0a526;
+}
+
+/* ===================================================================== */
+/*                            Списки                                     */
+/* ===================================================================== */
+main ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+main > ul {
+    padding: 18px 20px;
+    background: #fbf6e4;
+    border: 2px solid #2e2a1f;
+    box-shadow:
+        3px 3px 0 #2e2a1f,
+        inset 0 0 0 1px #fbf6e4,
+        inset 0 0 0 2px #e8d9a8;
+}
+
+main ul ul {
+    margin: 0;
+    padding: 0 0 0 28px;
+    border-left: 1px solid #e8d9a8;
+}
+
+main li {
+    margin: 0;
+    padding: 0;
+}
+
+/* ===================================================================== */
+/*                          Ссылки-пункты                                */
+/* ===================================================================== */
+main a {
+    display: block;
+    position: relative;
+    padding: 8px 12px 8px 32px;
+
+    font-family: inherit;
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    text-decoration: none;
+
+    color: #2e2a1f;
+    background: transparent;
+    border-radius: 4px;
+    transition: background 0.1s, color 0.1s;
+}
+
+/* квадратный буллет */
+main a::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    transform: translateY(-50%);
+    background: #e0a526;
+    border: 1.5px solid #2e2a1f;
+}
+
+main a:link,
+main a:visited {
+    color: #2e2a1f;
+    text-decoration: none;
+}
+
+main a:hover {
+    background: #f3e8c0;
+    color: #1f1c14;
+}
+
+main a:active {
+    background: #ecd9a0;
+}
+
+main a:focus-visible {
+    outline: 2px solid #e0a526;
+    outline-offset: 2px;
+}
+
+/* ===================================================================== */
+/*                              Адаптив                                  */
+/* ===================================================================== */
+@media (max-width: 560px) {
+    main {
+        padding: 40px 16px 64px;
+    }
+
+    main > h1 {
+        font-size: 1.6rem;
+        padding: 14px 16px;
+        box-shadow: 4px 4px 0 #e0a526;
+    }
+
+    main > ul {
+        padding: 14px 16px;
+    }
+
+    main ul ul {
+        padding-left: 22px;
+    }
+
+    main a {
+        font-size: 1.05rem;
+        padding: 8px 10px 8px 30px;
+    }
+
+    main a::before {
+        left: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    main a {
+        transition: none;
+    }
+}
