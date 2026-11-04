@@ -1,0 +1,337 @@
+/* ===================================================================== */
+/*                                  База                                 */
+/* ===================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #141414;
+    background:
+        radial-gradient(900px 500px at 15% 0%, #f0f0f0, transparent 55%),
+        radial-gradient(900px 600px at 100% 100%, #d8d8d8, transparent 55%),
+        #e6e6e6;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        repeating-linear-gradient(-45deg,
+            rgba(0, 0, 0, 0.045) 0 2px,
+            transparent 2px 8px);
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+}
+
+main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 16px;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* ===================================================================== */
+/*                            Переключатель режимов                      */
+/* ===================================================================== */
+.view-switch {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 100;
+
+    padding: 20px 12px;
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+
+    color: #f5f5f5;
+    background: #141414;
+    border: 3px solid #141414;
+    border-right: none;
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: -6px 6px 0 #8a8a8a;
+    transition: transform 0.12s, box-shadow 0.12s, background 0.12s, color 0.12s;
+}
+
+.view-switch:hover {
+    background: #2a2a2a;
+    transform: translateY(-50%) translate(-2px, 0);
+    box-shadow: -8px 8px 0 #8a8a8a;
+}
+
+.view-switch:active {
+    transform: translateY(-50%) translate(0, 2px);
+    box-shadow: -4px 4px 0 #8a8a8a;
+}
+
+.view-switch[aria-pressed="true"] {
+    background: #f5f5f5;
+    color: #141414;
+    box-shadow: -6px 6px 0 #141414;
+}
+
+.view-switch[aria-pressed="true"]:hover {
+    background: #e0e0e0;
+}
+
+/* ===================================================================== */
+/*                       Секции — карточки по центру                     */
+/* ===================================================================== */
+.current-card {
+    display: flex;
+    justify-content: center;
+}
+
+.all-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 72px;
+}
+
+/* ===================================================================== */
+/*                                Карточка                               */
+/* ===================================================================== */
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    width: 640px;
+    height: 320px;
+    background: #fafafa;
+    border: 4px solid #141414;
+    border-radius: 0;
+    box-shadow: 12px 12px 0 #141414;
+    overflow: hidden;
+    transform: rotate(-0.35deg);
+}
+
+/* ===================================================================== */
+/*                             Область контента                          */
+/* ===================================================================== */
+.card__content {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 44px 28px 20px;
+    overflow-y: auto;
+    color: #141414;
+    scrollbar-width: thin;
+    scrollbar-color: #141414 transparent;
+}
+
+.card__content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card__content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.card__content::-webkit-scrollbar-thumb {
+    background: #141414;
+}
+
+.card__content::-webkit-scrollbar-thumb:hover {
+    background: #6b6b6b;
+}
+
+.card__face {
+    margin: 0;
+    color: #141414;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.card__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    font-weight: 600;
+    color: #141414;
+}
+
+.card__list li {
+    position: relative;
+    padding: 0.35em 0 0.35em 1.8em;
+}
+
+.card__list li::before {
+    content: "✖";
+    position: absolute;
+    left: 0;
+    color: #6b6b6b;
+    font-weight: 800;
+}
+
+.card__list li + li {
+    margin-top: 0.2em;
+    border-top: 2px solid #141414;
+}
+
+/* ===================================================================== */
+/*                              Меню карточки                            */
+/* ===================================================================== */
+.card__footer {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 18px;
+    border-top: 4px solid #141414;
+    background: #ececec;
+}
+
+/* ===================================================================== */
+/*                                Оценки                                 */
+/* ===================================================================== */
+.card__grades {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.grade {
+    width: 42px;
+    height: 36px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.66rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border: 3px solid #141414;
+    border-radius: 0;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 3px 3px 0 #141414;
+    transition: transform 0.1s, box-shadow 0.1s, filter 0.1s;
+}
+
+.grade:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 #141414;
+    filter: brightness(1.05);
+}
+
+.grade:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #141414;
+}
+
+.grade--again {
+    background: #d4d4d4;
+    color: #141414;
+}
+
+.grade--hard {
+    background: #e5483f;
+    color: #fff;
+}
+
+.grade--good {
+    background: #f2c231;
+    color: #141414;
+}
+
+.grade--easy {
+    background: #4caf50;
+    color: #fff;
+}
+
+/* ===================================================================== */
+/*                            Кнопка поворота                            */
+/* ===================================================================== */
+.card__flip {
+    flex-shrink: 0;
+    width: 42px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    font-size: 1.1rem;
+    color: #141414;
+    border: 3px solid #141414;
+    border-radius: 0;
+    background: #fafafa;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #141414;
+    transition: transform 0.1s, box-shadow 0.1s, background 0.12s;
+}
+
+.card__flip:hover {
+    background: #ececec;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 #141414;
+}
+
+.card__flip:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #141414;
+}
+
+.card__flip[aria-pressed="true"] .card__flip-icon {
+    display: inline-block;
+    transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .grade,
+    .card__flip,
+    .view-switch {
+        transition: none;
+    }
+    .grade:hover,
+    .grade:active,
+    .card__flip:hover,
+    .card__flip:active,
+    .view-switch:hover,
+    .view-switch:active {
+        transform: none;
+    }
+}
