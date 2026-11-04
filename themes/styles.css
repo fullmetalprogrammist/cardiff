@@ -63,24 +63,32 @@ main {
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
-    display: grid;
-    grid-auto-rows: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-bottom: 72px;
+}
+
+.slide {
+    flex: 0 0 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    width: 100%;
 }
 
 /* ===================================================================== */
 /*                                Карточка                               */
 /* ===================================================================== */
 .card {
-    position: relative;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     width: 640px;
     max-width: calc(100% - 32px);
     height: 320px;
-    margin: auto;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
     background: #f4efe2;
     border: 2px solid #2b2620;
     border-radius: 0;
@@ -447,6 +455,150 @@ main {
     letter-spacing: 0.1em;
     color: #2b2620;
     white-space: nowrap;
+}
+
+/* ===================================================================== */
+/*                              Адаптив                                  */
+/* ===================================================================== */
+
+/* планшеты и узкие ноутбуки */
+@media (max-width: 800px) {
+    .card {
+        width: calc(100% - 48px);
+        max-width: none;
+        height: 360px;
+    }
+
+    .bottom-bar {
+        max-width: calc(100% - 16px);
+    }
+
+    .bottom-bar-item {
+        min-width: 40px;
+        padding: 0 8px;
+        font-size: 0.65rem;
+    }
+}
+
+/* телефоны */
+@media (max-width: 560px) {
+    .cards {
+        padding-bottom: 120px;
+    }
+
+    .card {
+        width: calc(100% - 32px);
+        max-width: none;
+        height: calc(100vh - 140px);
+        max-height: 560px;
+    }
+
+    .card-path {
+        font-size: 0.7rem;
+        padding: 2px 8px;
+        letter-spacing: 0.08em;
+    }
+
+    .card-body {
+        padding: 20px 16px 14px;
+    }
+
+    .card-question,
+    .card-answer {
+        font-size: 0.95rem;
+        letter-spacing: 0.04em;
+    }
+
+    .card-list {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .card-list li {
+        padding: 0.25em 0 0.25em 1.6em;
+    }
+
+    .card-list li::before {
+        left: 0.4em;
+    }
+
+    .card-footer {
+        padding: 6px 10px;
+        gap: 8px;
+    }
+
+    .grades {
+        gap: 6px;
+    }
+
+    .grade {
+        width: 38px;
+        height: 32px;
+    }
+
+    .flip {
+        width: 38px;
+        height: 32px;
+    }
+
+    .bottom-bar {
+        left: 0;
+        right: 0;
+        transform: none;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 100%;
+        flex-wrap: wrap;
+        border-left: none;
+        border-right: none;
+    }
+
+    .bottom-bar-group {
+        flex: 1 1 auto;
+        justify-content: center;
+    }
+
+    .bottom-bar-item {
+        min-width: 36px;
+        padding: 0 6px;
+        font-size: 0.6rem;
+        letter-spacing: 0.08em;
+    }
+
+    .bottom-bar-icon {
+        font-size: 16px;
+    }
+
+    .bottom-bar-counter {
+        padding: 0 6px;
+        font-size: 0.7rem;
+    }
+
+    .bottom-bar-sep {
+        width: 3px;
+    }
+}
+
+/* очень узкие экраны */
+@media (max-width: 380px) {
+    .card {
+        width: calc(100% - 24px);
+    }
+
+    .card-question,
+    .card-answer {
+        font-size: 0.9rem;
+    }
+
+    .card-list {
+        font-size: 0.8rem;
+    }
+
+    .bottom-bar-item {
+        min-width: 32px;
+        padding: 0 4px;
+        font-size: 0.55rem;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {

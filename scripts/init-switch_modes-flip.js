@@ -56,7 +56,8 @@
     }
 
     function createCard(template, item) {
-        const card = template.content.firstElementChild.cloneNode(true);
+        const slide = template.content.firstElementChild.cloneNode(true);
+        const card = slide.querySelector('.card');
         card.dataset.id = item.id;
 
         updatePath(card, item);
@@ -64,7 +65,7 @@
         fillList(card.querySelector('.card-question .card-list'), item.question);
         fillList(card.querySelector('.card-answer .card-list'), item.answer);
 
-        return card;
+        return slide;
     }
 
     function initFlip(card) {
@@ -117,7 +118,7 @@
 
     function getVisibleCards() {
         const slot = document.querySelector('.cards');
-        return [...slot.querySelectorAll('.card:not([hidden])')];
+        return [...slot.querySelectorAll('.slide:not([hidden]) .card')];
     }
 
     function getCurrentIndex(cards) {
@@ -175,12 +176,13 @@
         const order = window.CARD_RECOMPUTE(orderMode);
         const visible = new Set(order.map(String));
 
-        for (const card of slot.querySelectorAll('.card')) {
-            card.hidden = !visible.has(String(card.dataset.id));
+        for (const slide of slot.querySelectorAll('.slide')) {
+            const card = slide.querySelector('.card');
+            slide.hidden = !visible.has(String(card.dataset.id));
         }
         for (const id of order) {
             const card = slot.querySelector(`.card[data-id="${id}"]`);
-            if (card) slot.appendChild(card);
+            if (card) slot.appendChild(card.parentElement);
         }
 
         const byId = new Map(data.questions.map(q => [q.id, q]));
@@ -234,10 +236,10 @@
     addHiddenHeading(slot, 'Все карточки');
 
     for (const item of data.questions) {
-        const card = createCard(template, item);
-        slot.appendChild(card);
-        initFlip(card);
-        initGrades(card);
+        const slide = createCard(template, item);
+        slot.appendChild(slide);
+        initFlip(slide.querySelector('.card'));
+        initGrades(slide.querySelector('.card'));
     }
 
     const orderButtons = document.querySelectorAll('[data-mode]');

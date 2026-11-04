@@ -50,27 +50,29 @@
     </div>
 
     <template id="card-template">
-        <article class="card" data-side="question">
-            <div class="card-path"></div>
-            <div class="card-body">
-                <section class="card-question" aria-label="Вопрос">
-                    <ul class="card-list"></ul>
-                </section>
-                <section class="card-answer" aria-label="Ответ" hidden>
-                    <ul class="card-list"></ul>
-                </section>
-            </div>
-            <footer class="card-footer">
-                <div class="grades" role="group" aria-label="Оценка сложности">
-                    <button type="button" class="grade grade-easy"   data-grade="easy"></button>
-                    <button type="button" class="grade grade-medium" data-grade="medium"></button>
-                    <button type="button" class="grade grade-hard"   data-grade="hard"></button>
+        <div class="slide">
+            <article class="card" data-side="question">
+                <div class="card-path"></div>
+                <div class="card-body">
+                    <section class="card-question" aria-label="Вопрос">
+                        <ul class="card-list"></ul>
+                    </section>
+                    <section class="card-answer" aria-label="Ответ" hidden>
+                        <ul class="card-list"></ul>
+                    </section>
                 </div>
-                <button type="button" class="flip" aria-label="Показать ответ" aria-pressed="false">
-                    <span class="flip-icon" aria-hidden="true">⇄</span>
-                </button>
-            </footer>
-        </article>
+                <footer class="card-footer">
+                    <div class="grades" role="group" aria-label="Оценка сложности">
+                        <button type="button" class="grade grade-easy"   data-grade="easy"></button>
+                        <button type="button" class="grade grade-medium" data-grade="medium"></button>
+                        <button type="button" class="grade grade-hard"   data-grade="hard"></button>
+                    </div>
+                    <button type="button" class="flip" aria-label="Показать ответ" aria-pressed="false">
+                        <span class="flip-icon" aria-hidden="true">⇄</span>
+                    </button>
+                </footer>
+            </article>
+        </div>
     </template>
 </body>
 </html>
