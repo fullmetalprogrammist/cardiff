@@ -4,7 +4,8 @@
     const TOPICS = {
         kafka: '/cardiff/questions/kafka.js',
         database:  '/cardiff/questions/database.js',
-        microservices:  '/cardiff/questions/microservices.js'
+        microservices:  '/cardiff/questions/microservices.js',
+        java_threads:  '/cardiff/questions/java/threads.js',
     };
 
     const params = new URLSearchParams(location.search);
