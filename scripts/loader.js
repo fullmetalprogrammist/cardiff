@@ -6,6 +6,7 @@
         database:  '/cardiff/questions/database.js',
         microservices:  '/cardiff/questions/microservices.js',
         java_threads:  '/cardiff/questions/java/threads.js',
+        spring_boot:  '/cardiff/questions/spring/spring-boot.js',
     };
 
     const params = new URLSearchParams(location.search);
