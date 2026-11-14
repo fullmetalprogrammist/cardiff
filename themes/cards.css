@@ -133,7 +133,7 @@ main {
 
 .card-grade-dot {
     display: inline-block;
-    width: 16px;
+    width: 35px;
     height: 16px;
     border: 2px solid #f4efe2;
     background: transparent;
@@ -143,6 +143,7 @@ main {
 .card-grade-dot[data-grade="easy"]   { background: #4f8a3d; }
 .card-grade-dot[data-grade="medium"] { background: #f0c674; }
 .card-grade-dot[data-grade="hard"]   { background: #d94a3a; }
+.card-grade-dot[data-grade="again"] { background: #f4efe2; }
 
 /* ===================================================================== */
 /*                             Тело карточки                             */
