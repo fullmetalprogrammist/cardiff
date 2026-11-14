@@ -90,9 +90,10 @@
     function initGrades(card) {
         const id = card.dataset.id;
         const buttons = card.querySelectorAll('.grade');
+        const fsrs = window.CARD_FSRS;
         const store = window.CARD_STORE;
 
-        if (!store) return;
+        if (!fsrs || !store) return;
 
         const saved = store.data && store.data[id];
         if (saved && saved.grade) {
@@ -103,7 +104,10 @@
 
         for (const btn of buttons) {
             btn.addEventListener('click', () => {
-                store.write(id, btn.dataset.grade);
+                const grade = btn.dataset.grade;
+                const next = fsrs.review(id, grade);
+                if (!next) return;
+
                 for (const b of buttons) {
                     b.setAttribute('aria-pressed', String(b === btn));
                 }

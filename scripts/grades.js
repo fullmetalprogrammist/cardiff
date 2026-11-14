@@ -4,7 +4,17 @@
     const data = window.CARD_DATA;
     if (!data || !data.keystore) return;
 
+    const { FSRS, createEmptyCard, Rating } = window.FSRS;
+    const scheduler = new FSRS({});          // дефолтные параметры
     const KEY = 'cardiff:grades:' + data.keystore;
+
+    // 'easy' | 'medium' | 'hard' | 'again'  ->  Rating.*
+    const RATING = {
+        again:  Rating.Again,
+        hard:   Rating.Hard,
+        medium: Rating.Good,
+        easy:   Rating.Easy,
+    };
 
     function read() {
         try {
@@ -14,9 +24,12 @@
         }
     }
 
-    function write(id, grade) {
+    function write(id, grade, fsrsCard) {
         const store = read();
-        store[id] = { grade: grade, reviewedAt: Date.now() };
+        store[id] = Object.assign({}, fsrsCard, {
+            grade: grade,
+            reviewedAt: Date.now(),
+        });
         localStorage.setItem(KEY, JSON.stringify(store));
         window.CARD_STORE.data = store;
     }
@@ -78,5 +91,27 @@
         const fresh = read();
         window.CARD_STORE.data = fresh;
         return computeOrder(mode, fresh);
+    };
+
+    // Планировщик отдаём наружу, чтобы initGrades мог делать review
+    window.CARD_FSRS = {
+        Rating: RATING,
+        review: function (id, grade) {
+            const saved = window.CARD_STORE.data[id];
+            // карточка FSRS: либо из стора, либо пустая
+            const card = saved
+                ? Object.assign(createEmptyCard(), saved, {
+                    due: new Date(saved.due),
+                    last_review: saved.last_review ? new Date(saved.last_review) : undefined,
+                  })
+                : createEmptyCard();
+
+            const rating = RATING[grade];
+            if (!rating) return null;
+
+            const { card: next } = scheduler.next(card, new Date(), rating);
+            write(id, grade, next);
+            return next;
+        },
     };
 })();
