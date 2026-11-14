@@ -21,6 +21,17 @@
         return Math.floor(h / 24) + 'd.';
     }
 
+    function formatIn(ms) {
+        if (ms <= 0) return 'now';
+        const s = Math.floor(ms / 1000);
+        if (s < 60) return s + 's';
+        const m = Math.floor(s / 60);
+        if (m < 60) return m + 'm';
+        const h = Math.floor(m / 60);
+        if (h < 24) return h + 'h';
+        return Math.floor(h / 24) + 'd';
+    }
+
     function updatePath(card, item) {
         const pathEl = card.querySelector('.card-path');
         const store = window.CARD_STORE;
@@ -43,9 +54,21 @@
         meta.textContent = '';
 
         if (rec) {
+            if (rec.due) {
+                const next = document.createElement('span');
+                next.className = 'card-next';
+                next.textContent = 'след. повтор: ' + formatIn(new Date(rec.due).getTime() - Date.now());
+                meta.appendChild(next);
+
+                const sep = document.createElement('span');
+                sep.className = 'card-meta-sep';
+                sep.textContent = '·';
+                meta.appendChild(sep);
+            }
+
             const age = document.createElement('span');
             age.className = 'card-age';
-            age.textContent = formatAge(Date.now() - rec.reviewedAt);
+            age.textContent = 'пред. повтор: ' + formatAge(Date.now() - rec.reviewedAt);
             meta.appendChild(age);
 
             const dot = document.createElement('span');

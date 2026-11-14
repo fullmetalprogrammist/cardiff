@@ -127,6 +127,15 @@ main {
     letter-spacing: 0.04em;
 }
 
+.card-next {
+    font-weight: 700;
+    color: #f0c674;
+}
+
+.card-meta-sep {
+    opacity: 0.5;
+}
+
 .card-age {
     font-weight: 700;
 }
