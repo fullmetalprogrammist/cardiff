@@ -5,10 +5,9 @@
     if (!data || !data.keystore) return;
 
     const { FSRS, createEmptyCard, Rating } = window.FSRS;
-    const scheduler = new FSRS({});          // дефолтные параметры
+    const scheduler = new FSRS({});
     const KEY = 'cardiff:grades:' + data.keystore;
 
-    // 'easy' | 'medium' | 'hard' | 'again'  ->  Rating.*
     const RATING = {
         again:  Rating.Again,
         hard:   Rating.Hard,
@@ -53,6 +52,7 @@
 
     function computeOrder(mode, store) {
         const qs = data.questions;
+        const now = Date.now();
 
         switch (mode) {
             case 'grey':
@@ -76,16 +76,26 @@
                 return ids;
             }
 
-            case 'ebbinghaus':
+            case 'fsrs':
+                return qs
+                    .filter(q => {
+                        const rec = store[q.id];
+                        if (!rec || !rec.due) return false;
+                        return new Date(rec.due).getTime() <= now;
+                    })
+                    .map(q => ({ id: q.id, due: new Date(store[q.id].due).getTime() }))
+                    .sort((a, b) => a.due - b.due)
+                    .map(x => x.id);
+
             default:
-                return ageSort(qs, store, rec => !!rec);
+                return qs.map(q => q.id).sort((a, b) => b - a);
         }
     }
 
     const store = read();
 
     window.CARD_STORE = { read: read, write: write, data: store, key: KEY };
-    window.CARD_ORDER = computeOrder('ebbinghaus', store);
+    window.CARD_ORDER = computeOrder('fsrs', store);
 
     window.CARD_RECOMPUTE = function (mode) {
         const fresh = read();
@@ -93,12 +103,10 @@
         return computeOrder(mode, fresh);
     };
 
-    // Планировщик отдаём наружу, чтобы initGrades мог делать review
     window.CARD_FSRS = {
         Rating: RATING,
         review: function (id, grade) {
             const saved = window.CARD_STORE.data[id];
-            // карточка FSRS: либо из стора, либо пустая
             const card = saved
                 ? Object.assign(createEmptyCard(), saved, {
                     due: new Date(saved.due),

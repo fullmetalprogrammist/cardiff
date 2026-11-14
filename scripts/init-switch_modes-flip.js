@@ -203,6 +203,20 @@
         const order = window.CARD_RECOMPUTE(orderMode);
         const visible = new Set(order.map(String));
 
+        let empty = slot.querySelector('.cards-empty');
+        if (order.length === 0) {
+            if (!empty) {
+                empty = document.createElement('p');
+                empty.className = 'cards-empty';
+                slot.insertBefore(empty, slot.firstChild);
+            }
+            empty.textContent = orderMode === 'fsrs'
+                ? 'По FSRS нет карточек, которые надо повторять прямо сейчас'
+                : 'Нет карточек для отображения';
+        } else if (empty) {
+            empty.remove();
+        }
+
         for (const slide of slot.querySelectorAll('.slide')) {
             const card = slide.querySelector('.card');
             slide.hidden = !visible.has(String(card.dataset.id));
