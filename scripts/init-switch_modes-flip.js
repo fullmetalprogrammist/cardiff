@@ -143,6 +143,7 @@
     }
 
     let orderMode = 'all';
+    let lastCurrentId = null;
 
     function getVisibleCards() {
         const slot = document.querySelector('.cards');
@@ -174,6 +175,15 @@
         const totEl = document.querySelector('.bottom-bar-total');
         if (curEl) curEl.textContent = String(current).padStart(2, '0');
         if (totEl) totEl.textContent = String(total).padStart(2, '0');
+
+        const card = total ? cards[current - 1] : null;
+        const id = card ? card.dataset.id : null;
+        if (id !== lastCurrentId) {
+            lastCurrentId = id;
+            if (card && typeof card._showQuestion === 'function') {
+                card._showQuestion();
+            }
+        }
     }
 
     function initCardNav() {
@@ -234,6 +244,7 @@
         }
 
         slot.scrollTo({ top: 0, behavior: 'instant' });
+        lastCurrentId = null;
         updateNav();
     }
 
