@@ -31,6 +31,7 @@
     }
 
     loadScript(src)
+        .then(() => loadScript('/cardiff/scripts/fsrs.js'))
         .then(() => loadScript('/cardiff/scripts/grades.js'))
         .then(() => loadScript('/cardiff/scripts/init-switch_modes-flip.js'))
         .catch(err => {
