@@ -136,7 +136,8 @@
                 }
                 const item = data.questions.find(q => String(q.id) === String(id));
                 if (item) updatePath(card, item);
-                resortAllCards();
+
+                if (orderMode === 'fsrs' || orderMode === 'grey') resortAllCards();
             });
         }
     }

@@ -65,7 +65,15 @@
                 return ageSort(qs, store, rec => rec && rec.grade === 'hard');
 
             case 'all':
-                return qs.map(q => q.id).sort((a, b) => b - a);
+                return qs
+                    .map(q => q.id)
+                    .sort((a, b) => {
+                        const ra = store[a];
+                        const rb = store[b];
+                        const ta = ra ? ra.reviewedAt : Infinity;
+                        const tb = rb ? rb.reviewedAt : Infinity;
+                        return ta - tb;
+                    });
 
             case 'random': {
                 const ids = qs.map(q => q.id);
