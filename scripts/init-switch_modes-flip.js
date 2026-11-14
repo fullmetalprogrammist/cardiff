@@ -71,6 +71,16 @@
             age.textContent = 'пред. повтор: ' + formatAge(Date.now() - rec.reviewedAt);
             meta.appendChild(age);
 
+            const sep2 = document.createElement('span');
+            sep2.className = 'card-meta-sep';
+            sep2.textContent = '·';
+            meta.appendChild(sep2);
+
+            const dotLabel = document.createElement('span');
+            dotLabel.className = 'card-grade-label';
+            dotLabel.textContent = 'пред. оценка:';
+            meta.appendChild(dotLabel);
+
             const dot = document.createElement('span');
             dot.className = 'card-grade-dot';
             dot.dataset.grade = rec.grade;
