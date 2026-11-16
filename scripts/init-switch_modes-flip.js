@@ -274,6 +274,37 @@
         apply(orderMode);
     }
 
+    function initClearStore() {
+        const btn = document.getElementById('btn-clear-store');
+        if (!btn) return;
+
+        btn.addEventListener('click', () => {
+            const store = window.CARD_STORE;
+            if (!store || !store.key) return;
+
+            const ok = window.confirm(
+                'Точно хотите удалить прогресс повторений для темы «' +
+                (data.title || data.keystore) + '»?'
+            );
+            if (!ok) return;
+
+            try {
+                localStorage.removeItem(store.key);
+            } catch (e) {
+                console.error('[clear]', e);
+                return;
+            }
+
+            store.data = {};
+            window.CARD_STORE.data = {};
+
+            if (typeof window.CARD_RECOMPUTE === 'function') {
+                window.CARD_ORDER = window.CARD_RECOMPUTE(orderMode);
+            }
+            resortAllCards();
+        });
+    }
+
     function addHiddenHeading(section, text) {
         const h2 = document.createElement('h2');
         h2.className = 'visually-hidden';
@@ -309,5 +340,6 @@
     if (orderButtons.length) initOrderSwitch(orderButtons);
 
     initCardNav();
+    initClearStore();
     updateNav();
 })();
